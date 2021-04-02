@@ -9,10 +9,8 @@ describe('login', () => {
       cy.findByLabelText(/password/i).type(user.password)
       cy.findByText(/submit/i).click()
 
-      cy.window()
-        .its('localStorage.token')
-        .should('be.a', 'string')
-      cy.findByTestId('username-display').should('have.text', user.username)
+      cy.assertHome()
+      cy.assertLoggedInAs(user)
     })
   })
 })
