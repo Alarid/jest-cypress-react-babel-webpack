@@ -15,3 +15,18 @@ describe('anonymous calculator', () => {
     cy.findByTestId('total').should('have.text', '3')
   })
 })
+
+describe('authenticated calculator', () => {
+  it('displays the username', () => {
+    cy.createUser().then(user => {
+      cy.loginUser(user)
+
+      cy.visit('/')
+      cy.assertHome()
+      cy.assertLoggedInAs(user)
+
+      cy.findByText(/logout/i).click()
+      cy.findByTestId('username-display').should('not.exist')
+    })
+  })
+})
